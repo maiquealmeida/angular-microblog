@@ -1,0 +1,30 @@
+!!!
+html(ng-app="myApp")
+	head
+		meta(charset='utf8')
+		base(href='/')
+		title #{name} - Microblog
+		link(rel='stylesheet', href='/css/layout.css')
+		link(rel='stylesheet', href='/css/app.css')
+		block style
+
+	body
+		.content
+			block body
+
+		#header
+			h1 Microblog
+			ul#navigation
+				li
+					a(href='#') Home
+				li
+					a(href='#') Login
+				li
+					a(href='#') Register
+				li
+					a(href='#') Post
+				li
+					a(href='#') About
+
+	script(src='/js/jquery.js')
+	block script

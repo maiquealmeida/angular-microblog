@@ -1,0 +1,16 @@
+extends layout
+
+block style
+	link(rel='stylesheet', href='/css/welcome.css')
+
+block body
+	div(ng-controller='WelcomeCtrl')
+		.hero-unit
+			h2 Hi! Welcome to Ed' Microblog!
+
+		.btn-unit
+			a(href='/login').btn Login
+		
+		.btn-unit
+			a(href='/register').btn Register
+
