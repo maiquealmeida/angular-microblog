@@ -55,19 +55,24 @@ body{
 
 .content{
     position: absolute;
-    right: 40px;
+    right: 30px;
     left: 280px;
     padding-bottom: 30px;
     top: 0;
 }
 
+.content{
+    font-family: tahoma, verdana, sans-serif, arial;
+}
+
 .content h2{
-    font-size: 32px;
+    font-size: 48px;
     padding: 10px 0px 20px 0px;
     margin-top: 20px;
     color: #fff;
     text-shadow: 0px 1px 1px rgba(0,0,0, 0.3);
 }
+
 
 .content p{
     font-size: 18px;
@@ -79,3 +84,10 @@ body{
     background: #8cc485;
 }
 
+.hero-unit{
+    width: 100%;
+    text-align: center;
+    padding-top: 30px;
+    padding-bottom: 20px;
+    background:#a4bb46;
+}

@@ -1,0 +1,68 @@
+form{
+    margin-top: 1em;
+}
+
+fieldset{
+    border: 4px dashed #162916;
+    padding: 3em;
+}
+
+.input-row{
+    margin-bottom: 1em;
+}
+
+.input-row label{
+    font-size: 3em;
+    color: #fff;
+    text-align: right;
+    display: inline-block;
+    width: 7em;
+    padding-right: 1em;
+}
+
+.input-row input[type='text'], .input-row input[type='password']{
+    vertical-align: bottom;
+    border: none;
+    padding: .5em 1em;
+    font-size: 2em;
+    font-family: tahoma, verdana, sans-serif, arial;
+    background: #bcdccd;
+    color: #333333;
+}
+
+.input-row input[type='text']:focus,.input-row input[type='password']:focus{
+    outline: 6px solid #fff;
+}
+
+.button-row{
+    padding-top: 1em;
+    text-align: center;
+}
+
+.button-row input{
+    border: none;
+    margin-right: 2em;
+    font-size: 2em;
+    font-family: tahoma, verdana, sans-serif, arial;
+    padding: .3em 1em;
+    color: #fff;
+}
+
+.button-row input[type='submit']{
+    background:#d5921d;
+}
+
+.button-row input[type='submit']:hover{
+    background:#fff;
+    color: #d5921d;
+}
+
+
+.button-row input[type='reset']{
+    background: #efac65;
+}
+
+.button-row input[type='reset']:hover{
+    background: #fff;
+    color: #efac65;
+}

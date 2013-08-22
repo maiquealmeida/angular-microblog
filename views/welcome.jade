@@ -9,8 +9,10 @@ block body
 			h2 Hi! Welcome to Ed' Microblog!
 
 		.btn-unit
-			a(href='/login').btn Login
-		
-		.btn-unit
-			a(href='/register').btn Register
-
+			.btn-outer
+				p Already registered?
+				a(href='/login').btn Login 
+			
+			.btn-outer
+				p No account yet? 
+				a(href='/register').btn Register
