@@ -1,0 +1,19 @@
+.hero-unit
+	h2 Login
+
+form
+	fieldset
+		.input-row
+			label(for='username') Username
+			input(type='text', name='username', placeholder='Your username here')
+
+		.input-row
+			label(for='password') Password
+			input(type='password', name='password', placeholder='Your password here')
+
+		.button-row
+			input(type='submit', value='submit')
+			input(type='reset', value='reset')
+
+block style
+	link(rel='stylesheet', href='/css/login.css')

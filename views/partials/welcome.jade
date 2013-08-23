@@ -1,0 +1,26 @@
+extends layout
+
+block style
+	link(rel='stylesheet', href='/css/welcome.css')
+
+block body
+	div(ng-controller='WelcomeCtrl')
+		.hero-unit
+			h2 Hi! Welcome to Ed' Microblog!
+
+		.btn-unit
+			.btn-outer
+				p Already registered?
+				a(href='/login').btn Login 
+			
+			.btn-outer
+				p No account yet? 
+				a(href='/register').btn Register
+
+block script
+	script(src='js/lib/angular/angular.js')
+	script(src='js/app.js')
+	script(src='js/services.js')
+	script(src='js/controllers.js')
+	script(src='js/filters.js')
+	script(src='js/directives.js')

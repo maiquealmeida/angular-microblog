@@ -2,14 +2,27 @@
 
 // Declare app level module which depends on filters, and services
 
-angular.module('myApp', [
-  'myApp.controllers',
-  'myApp.filters',
-  'myApp.services',
-  'myApp.directives'
+var module = angular.module('mblogApp', [
+  'mblogApp.controllers',
+  'mblogApp.filters',
+  'mblogApp.services',
+  'mblogApp.directives'
 ]).
 config(function ($routeProvider, $locationProvider) {
   $routeProvider.
+    when('/', {
+      templateUrl: 'partials/home',
+      controller: 'WelcomeCtrl'
+    }).
+    when('/login', {
+      templateUrl: 'partials/login'
+    }).
+    when('/register',{
+      templateUrl: 'partials/register'
+    }).
+    when('/about', {
+      templateUrl: 'partials/about'
+    }).
     when('/view1', {
       templateUrl: 'partials/partial1',
       controller: 'MyCtrl1'

@@ -42,18 +42,15 @@ if (app.get('env') === 'production') {
  */
 
 // serve index and view partials
-app.get('/', routes.welcome);
-app.get('/register', routes.register);
-app.get('/login', routes.login);
-app.get('/about', routes.about)
+app.get('/', routes.index);
 app.get('/partials/:name', routes.partials);
 
 
 // JSON API
-app.get('/api/name', api.name);
+//app.get('/api/name', api.name);
 
 // redirect all others to the index (HTML5 history)
-app.get('*', routes.index);
+//app.get('*', routes.index);
 
 
 /**

@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-angular.module('myApp.controllers', []).
+angular.module('mblogApp.controllers', []).
   controller('AppCtrl', function ($scope, $http) {
 
     $http({
@@ -24,4 +24,7 @@ angular.module('myApp.controllers', []).
   controller('MyCtrl2', function ($scope) {
     // write Ctrl here
 
+  }).
+  controller('WelcomeCtrl', function($scope) {
+    //
   });
