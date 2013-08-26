@@ -1,9 +1,9 @@
-.btn-unit{
+.button-unit{
     margin-top: 4em;
     text-align: center;
 }
 
-.btn-outer{
+.button-outer{
     width: 32%;
     min-height: 15em;
     display: inline-block;
@@ -13,11 +13,11 @@
     margin-right: 3em;
 }
 
-.btn-outer p{
+.button-outer p{
     font-size: 28px;
 }
 
-.btn{
+.button{
     display: block;
     width: 80%;
     margin: auto;
@@ -30,7 +30,8 @@
     padding-bottom: 1em;
 }
 
-.btn:hover{
+.button:hover{
     background: #fff;
     color: #3fce74;
+    text-decoration: none;
 }

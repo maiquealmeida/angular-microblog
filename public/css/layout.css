@@ -15,7 +15,7 @@ body{
     position: absolute;
     width: 235px;
     top: 20px;
-    z-index: 2000;
+    z-index: 1000;
 }
 
 #header h1{
@@ -32,6 +32,7 @@ body{
     width: 235px;
     display: block;
     margin-top: 20px;
+    margin-left: 0;
     list-style: none;
     z-index: 3;
 }
@@ -87,6 +88,8 @@ body{
 .hero-unit{
     width: 100%;
     text-align: center;
+    border-radius: 0;
+    padding: 0;
     padding-top: 30px;
     padding-bottom: 20px;
     background:#a4bb46;

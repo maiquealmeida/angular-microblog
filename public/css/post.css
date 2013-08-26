@@ -1,0 +1,139 @@
+.hero-unit{
+    position: relative;
+}
+
+.hero-unit .button{
+    text-decoration: none;
+    font-size: 18px;
+    color: #fff;
+    background: #DCFE2B;
+    padding: 15px;
+    position: absolute;
+    right: 5%;
+    bottom: 0;
+    cursor: pointer;
+}
+
+.hero-unit .button:hover{
+    background: #fff;
+    color: #DCFE2B;
+}
+
+.modal{
+    border-radius: 0;
+    background: #83AC34;
+}
+
+.modal-header{
+    border: none;
+    margin-left: 7%;
+    margin-bottom: 1em;
+}
+
+.modal-header h3{
+    color: #fff;
+    font-size: 2em;
+}
+
+.modal-body{
+    padding: 0 10%;
+    border: 0;
+    
+}
+
+.modal-body textarea{
+    display: block;
+    width: 90%;
+    border-radius: 0;
+    background: #FDF69C;
+    border: 0;
+    resize: none;
+    font-size: 1.5em;
+    color: #8CC485;
+    overflow-y: auto;
+    height: 5em;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.modal-body label{
+    display: inline;
+    margin-bottom: 1em;
+    vertical-align: top;
+    font-size: 15px;
+    color: #fff;
+    font-weight: 600;
+}
+
+.modal-body input{
+    margin-left: 1em;
+    font-size: 1.2em;
+    line-height: 1.2em;
+    margin-bottom: 1em;
+    padding-left: 1em;
+    background: #FDF69C;
+    color: #8CC485;
+    border: 0;
+}
+
+.modal-footer{
+    border-radius: 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    padding-bottom: 2em;
+}
+
+.modal-footer .button{
+    background: #EFAC65;
+    font-size: 1.2em;
+    color: #fff;
+    margin-right: 10%;
+    padding: .5em 2.5em;
+}
+
+.modal-footer .button:hover{
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.post-unit{
+    margin-top: 25px;
+    margin-left: 0;
+    font-size: 18px;
+    list-style: none;
+    
+}
+
+.post-unit li{
+    display: inline-block;
+    vertical-align: bottom;
+    width: 32%;
+    margin-right: 1%;
+    margin-bottom: 1%;
+    background: #FDF69C;
+    color: #fff;
+}
+
+.post{
+    margin: 2em;
+    padding: 1em;
+    background: #EFAC65;
+}
+
+.post-unit li span{
+    width: 50%;
+    display: inline-block;
+    text-align: center;
+    
+}
+
+.post-user{
+    background: #85AC35;
+}
+
+.post-time{
+    background: #8CC485;
+}

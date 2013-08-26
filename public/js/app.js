@@ -6,7 +6,8 @@ var module = angular.module('mblogApp', [
   'mblogApp.controllers',
   'mblogApp.filters',
   'mblogApp.services',
-  'mblogApp.directives'
+  'mblogApp.directives',
+  'ui.bootstrap'
 ]).
 config(function ($routeProvider, $locationProvider) {
   $routeProvider.
@@ -22,6 +23,9 @@ config(function ($routeProvider, $locationProvider) {
     }).
     when('/about', {
       templateUrl: 'partials/about'
+    }).
+    when('/post', {
+      templateUrl: 'partials/post'
     }).
     when('/view1', {
       templateUrl: 'partials/partial1',

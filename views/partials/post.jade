@@ -1,0 +1,50 @@
+.hero-unit
+	h2 Posts
+	div(ng-controller="makePostCtrl")
+		a.button(ng-click="open()") make post
+		div(modal="openStatus", close="close()", options="opts")
+			.modal-header
+				h3 make post
+			.modal-body	
+				label(for="name") Your name
+				input(ng-model="post.user", name="name",required)
+				textarea(ng-model="post.text",required)
+			.modal-footer
+				a.button(ng-submit="post()") Post
+				a.button(ng-click="close()") Cancel
+
+
+
+ul.post-unit(ng-controller="showPostCtrl")
+	li(ng-repeat='post in posts')
+		.post {{post.text}}
+		span.post-user {{post.user}}
+		span.post-time {{post.time}}
+
+	li
+		.post I'm what I am.
+		span.post-user Jackson
+		span.post-time 8-20-2013 12:33
+
+	li
+		.post This app is implemented with angularJS and nodeJS.
+		span.post-user Edward.G.
+		span.post-time 8-23-2013 23:46
+
+	li
+		.post Easy come, easy go.
+		span.post-user Paul
+		span.post-time 4-20-2012 08:12
+
+	li
+		.post You have to give before you get.
+		span.post-user Edward.G.
+		span.post-time 04-07-2013 14:33
+
+	li
+		.post It's time to go.
+		span.post-user Christina
+		span.post-time 09-10-2013 00:21
+
+block style
+	link(rel='stylesheet', href='/css/post.css')

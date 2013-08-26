@@ -17,14 +17,27 @@ angular.module('mblogApp.controllers', []).
     });
 
   }).
-  controller('MyCtrl1', function ($scope) {
-    // write Ctrl here
-
-  }).
-  controller('MyCtrl2', function ($scope) {
-    // write Ctrl here
-
-  }).
   controller('WelcomeCtrl', function($scope) {
     //
+  }).
+  controller('makePostCtrl', function($scope){
+    $scope.open = function(){
+      $scope.openStatus = true;
+    };
+
+    $scope.close = function(){
+      $scope.openStatus = false;
+    };
+
+    $scope.post = function(){
+
+    };
+
+    $scope.opts = {
+      backdropFade: true,
+      dialogFade: true
+    };
+  }).
+  controller('showPostCtrl', function($scope){
+      
   });

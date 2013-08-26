@@ -3,7 +3,7 @@ form{
 }
 
 fieldset{
-    border: 4px dashed #162916;
+    border: 4px dashed #162916 !important;
     padding: 3em;
 }
 
@@ -18,20 +18,24 @@ fieldset{
     display: inline-block;
     width: 7em;
     padding-right: 1em;
+    cursor: default;
 }
 
 .input-row input[type='text'], .input-row input[type='password']{
-    vertical-align: bottom;
-    border: none;
-    padding: .5em 1em;
-    font-size: 2em;
     font-family: tahoma, verdana, sans-serif, arial;
     background: #bcdccd;
     color: #333333;
+    font-size: 2em;
+    height: 2em;
+    line-height: 2em;
+    width: auto;
+    padding: .2em 1em;
 }
 
 .input-row input[type='text']:focus,.input-row input[type='password']:focus{
     outline: 6px solid #fff;
+    box-shadow: none;
+    border: none;
 }
 
 .button-row{
@@ -40,9 +44,11 @@ fieldset{
 }
 
 .button-row input{
-    border: none;
+    border: 0px;
+    border-radius: 0px;
     margin-right: 2em;
     font-size: 2em;
+    height: 2em;
     font-family: tahoma, verdana, sans-serif, arial;
     padding: .3em 1em;
     color: #fff;
