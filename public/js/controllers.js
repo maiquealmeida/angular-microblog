@@ -6,10 +6,17 @@ angular.module('mblogApp.controllers', ['mblogApp.services']).
   controller('welcomeCtrl', function($scope) {
     
   }).
-  controller('makePostCtrl', ['posts',function($scope, posts){
-      posts.push($scope.user, $scope.text);
+  controller('makePostCtrl', function($scope, $location, posts){
+  	$scope.close = function(){
+      $location.path('/');
+    };
 
-  }]).
-  controller('showPostCtrl', ['posts', function($scope, posts){
+    $scope.makePost = function(){
+      posts.push($scope.user, $scope.text);
+      $location.path('/');
+    };
+
+  }).
+  controller('showPostCtrl', function($scope, posts){
     $scope.posts = posts.get();
-  }]);
+  });

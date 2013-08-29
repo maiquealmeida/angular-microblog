@@ -2,9 +2,9 @@
 
 /* Services */
 
-angular.module('mblogApp.services',[]).
+angular.module('mblogApp.services', []).
 	service('posts', function(){
-			this.posts = [];
+			var posts = [];
 
 			this.get = function(){
 				return posts;

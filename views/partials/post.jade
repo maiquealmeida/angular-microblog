@@ -3,10 +3,13 @@
 
 div.post-maker(ng-controller="makePostCtrl")
 	label(for="name") Your name
-	input(ng-model="post.uesr", name="name". required)
-	textarea(ng-model="post.text", required)
+	input(ng-model="user", name="name",required)
+	textarea(ng-model="text", required)
 	a.button(ng-click="makePost()") Post
 	a.button(ng-click="close()") Cancel
+
+
+
 //
 	div(ng-controller="makePostCtrl")
 		a.button(ng-click="open()") make post
