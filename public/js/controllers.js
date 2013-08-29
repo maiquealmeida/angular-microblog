@@ -2,42 +2,14 @@
 
 /* Controllers */
 
-angular.module('mblogApp.controllers', []).
-  controller('AppCtrl', function ($scope, $http) {
-
-    $http({
-      method: 'GET',
-      url: '/api/name'
-    }).
-    success(function (data, status, headers, config) {
-      $scope.name = data.name;
-    }).
-    error(function (data, status, headers, config) {
-      $scope.name = 'Error!'
-    });
-
+angular.module('mblogApp.controllers', ['mblogApp.services']).
+  controller('welcomeCtrl', function($scope) {
+    
   }).
-  controller('WelcomeCtrl', function($scope) {
-    //
-  }).
-  controller('makePostCtrl', function($scope){
-    $scope.open = function(){
-      $scope.openStatus = true;
-    };
+  controller('makePostCtrl', ['posts',function($scope, posts){
+      posts.push($scope.user, $scope.text);
 
-    $scope.close = function(){
-      $scope.openStatus = false;
-    };
-
-    $scope.post = function(){
-
-    };
-
-    $scope.opts = {
-      backdropFade: true,
-      dialogFade: true
-    };
-  }).
-  controller('showPostCtrl', function($scope){
-      
-  });
+  }]).
+  controller('showPostCtrl', ['posts', function($scope, posts){
+    $scope.posts = posts.get();
+  }]);

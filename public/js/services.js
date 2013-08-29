@@ -2,8 +2,22 @@
 
 /* Services */
 
+angular.module('mblogApp.services',[]).
+	service('posts', function(){
+			this.posts = [];
 
-// Demonstrate how to register services
-// In this case it is a simple value service.
-angular.module('mblogApp.services', []).
-  value('version', '0.1');
+			this.get = function(){
+				return posts;
+			};
+
+			this.push = function(user, text){
+				var post = {
+					user: user,
+					text: text,
+					time: Date.now()
+				};
+
+				posts.push(post);
+			};
+	}).
+	value('version', '0.1');
