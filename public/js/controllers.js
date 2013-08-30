@@ -19,4 +19,7 @@ angular.module('mblogApp.controllers', ['mblogApp.services']).
   }).
   controller('showPostCtrl', function($scope, posts){
     $scope.posts = posts.get();
-  });
+  }).
+  controller('registerCtrl', ['angularFire', function($scope){
+
+  }]);

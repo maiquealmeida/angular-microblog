@@ -7,6 +7,7 @@ var app = angular.module('mblogApp', [
   'mblogApp.filters',
   'mblogApp.services',
   'mblogApp.directives',
+  'firebase',
 ]).
 config(function ($routeProvider, $locationProvider) {
   $routeProvider.
