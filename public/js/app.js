@@ -2,18 +2,18 @@
 
 // Declare app level module which depends on filters, and services
 
-var app = angular.module('mblogApp', [
+var module = angular.module('mblogApp', [
   'mblogApp.controllers',
   'mblogApp.filters',
   'mblogApp.services',
   'mblogApp.directives',
-  'firebase',
+  'ui.bootstrap'
 ]).
 config(function ($routeProvider, $locationProvider) {
   $routeProvider.
     when('/', {
       templateUrl: 'partials/home',
-      controller: 'welcomeCtrl'
+      controller: 'WelcomeCtrl'
     }).
     when('/login', {
       templateUrl: 'partials/login'
@@ -27,10 +27,17 @@ config(function ($routeProvider, $locationProvider) {
     when('/post', {
       templateUrl: 'partials/post'
     }).
+    when('/view1', {
+      templateUrl: 'partials/partial1',
+      controller: 'MyCtrl1'
+    }).
+    when('/view2', {
+      templateUrl: 'partials/partial2',
+      controller: 'MyCtrl2'
+    }).
     otherwise({
       redirectTo: '/'
     });
 
   $locationProvider.html5Mode(true);
 });
-
