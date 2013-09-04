@@ -20,10 +20,23 @@ angular.module('mblogApp.controllers', ['mblogApp.services', 'firebase']).
   controller('welcomeCtrl', function($scope) {
     //
   }).
-  controller('registerCtrl', function($scope, angularFireAuth){
+  controller('registerCtrl', function($scope, $location, angularFireAuth){
+    $scope.hasMessage = false;
     var ref = new Firebase('https://edward-g.firebaseio.com');
     angularFireAuth.initialize(ref, {scope: $scope, name: "user"});
 
+    $scope.register = function(){
+      console.log('ng-click on register');
+
+      if($scope.password != $scope.password_again){
+        console.log('Passwords entered not consistent.');
+
+        $scope.message = 'Passwords entered not consistent.';
+        $scope.hasMessage = true;
+        $location.path('/register');
+      }
+
+    };
   }).
   controller('makePostCtrl', function($scope, posts){
     $scope.open = function(){

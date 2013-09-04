@@ -2,21 +2,22 @@
 	h2 Registration
 
 form(ng-controller='registerCtrl')
+	span.message(ng-show='hasMessage') {{message}}
 	fieldset
 		.input-row
 			label(for='username') Username
-			input(type='text', name='username', placeholder='Your username here')
+			input(type='text', name='username', placeholder='Your username here', ng-model='username')
 	
 		.input-row
 			label(for='password') Password
-			input(type='password', name='password', placeholder='Your password here')
+			input(type='password', name='password', placeholder='Your password here', ng-model='password')
 	
 		.input-row
 			label(for='password-again') Password again
-			input(type='password', name='password-again', placeholder='Your password again') 
+			input(type='password', name='password-again', placeholder='Your password again', ng-model='password_again') 
 
 		.button-row
-			input(type='submit', value='submit')
+			input(type='submit', value='submit', ng-click='register()')
 			input(type='reset', value='reset')
 
 block style

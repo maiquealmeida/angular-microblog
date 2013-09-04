@@ -2,6 +2,16 @@ form{
     margin-top: 1em;
 }
 
+.message{
+    display: inline-block;
+    font-size: 1.5em;
+    background: #009c8b;
+    color: #fff;
+    padding: .5em;
+    margin-bottom: .5em;
+    
+}
+
 fieldset{
     border: 4px dashed #162916;
     padding: 3em;
