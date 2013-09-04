@@ -11,6 +11,8 @@
 
 "use strict";
 
+var AngularFire;
+
 // Define the `firebase` module under which all AngularFire services will live.
 angular.module("firebase", []).value("Firebase", Firebase);
 
@@ -33,14 +35,20 @@ angular.module("firebase").factory("angularFire", ["$q", "$parse", "$timeout",
 ]);
 
 // The `AngularFire` object that implements implicit synchronization.
-function AngularFire($q, $parse, $timeout, ref) {
+AngularFire = function($q, $parse, $timeout, ref) {
   this._q = $q;
-  this._fRef = ref;
   this._parse = $parse;
   this._timeout = $timeout;
   this._initial = true;
   this._remoteValue = false;
-}
+
+  if (typeof ref == "string") {
+    throw new Error("Please provide a Firebase reference instead " +
+      "of a URL, eg: new Firebase(url)");
+  }
+  this._fRef = ref;
+};
+
 AngularFire.prototype = {
   // This function is called by the factory to create a new 2-way binding
   // between a particular model in a `$scope` and a particular Firebase
@@ -67,23 +75,26 @@ AngularFire.prototype = {
         if (remote && check.call(local) == check.call(remote)) {
           if (check.call(local) == "[object Array]") {
             merged = local.concat(remote);
+            if (!angular.equals(merged, remote)) {
+              self._fRef.ref().set(merged);
+              remote = merged;
+            }
           } else if (check.call(local) == "[object Object]") {
             merged = local;
             for (var key in remote) {
               merged[key] = remote[key];
             }
+            self._fRef.ref().update(merged);
+            remote = merged;
           }
         }
         // If remote value is null, overwrite remote value with local
         if (remote === null) {
-          merged = local;
+          self._fRef.ref().set(local);
+          remote = local;
         }
         // If types don't match or the type is primitive, just overwrite the
         // local value with the remote value.
-        if (merged) {
-          self._fRef.ref().update(merged);
-          return;
-        }
       }
 
       var resolve = false;
@@ -94,7 +105,7 @@ AngularFire.prototype = {
 
       // Update the local model to reflect remote changes.
       self._timeout(function() {
-        self._resolve($scope, name, resolve, remote)
+        self._resolve($scope, name, resolve, remote);
       });
     });
     return promise;
@@ -155,7 +166,17 @@ AngularFire.prototype = {
       if (angular.equals(val, self._remoteValue)) {
         return;
       }
-      self._fRef.ref().update(val);
+      var check = Object.prototype.toString;
+      if (check.call(val) == "[object Object]") {
+        // Use update if limits are in effect, set if not.
+        if (self._fRef.set) {
+          self._fRef.set(val);
+        } else {
+          self._fRef.ref().update(val);
+        }
+      } else {
+        self._fRef.ref().set(val);
+      }
     }, true);
     // Also watch for scope destruction and unregister.
     $scope.$on("$destroy", function() {
@@ -178,13 +199,18 @@ AngularFire.prototype = {
 angular.module("firebase").factory("angularFireCollection", ["$timeout",
   function($timeout) {
     return function(collectionRef, initialCb) {
+      if (typeof collectionRef == "string") {
+        throw new Error("Please provide a Firebase reference instead " +
+          "of a URL, eg: new Firebase(url)");
+      }
+
       // An internal representation of a model present in the collection.
-      function angularFireItem(ref, index) {
+      var AngularFireItem = function(ref, index) {
         this.$ref = ref.ref();
         this.$id = ref.name();
         this.$index = index;
         angular.extend(this, {$priority: ref.getPriority()}, ref.val());
-      }
+      };
 
       // Implementation of firebase priority ordering:
       // https://www.firebase.com/docs/javascript/firebase/setpriority.html
@@ -267,7 +293,7 @@ angular.module("firebase").factory("angularFireCollection", ["$timeout",
       collectionRef.on("child_added", function(data, prevId) {
         $timeout(function() {
           var index = getIndex(prevId);
-          addChild(index, new angularFireItem(data, index));
+          addChild(index, new AngularFireItem(data, index));
           updateIndexes(index);
         });
       });
@@ -285,7 +311,7 @@ angular.module("firebase").factory("angularFireCollection", ["$timeout",
         $timeout(function() {
           var index = indexes[data.name()];
           var newIndex = getIndex(prevId);
-          var item = new angularFireItem(data, index);
+          var item = new AngularFireItem(data, index);
 
           updateChild(index, item);
           if (newIndex !== index) {
@@ -311,14 +337,25 @@ angular.module("firebase").factory("angularFireCollection", ["$timeout",
         return collection[indexes[name]];
       };
 
+      // Retrieve a collection of objects by names.
+      collection.getByNames = function(names) {
+        var objs = [];
+        for (var i = 0, len = names.length; i < len; i++) {
+          objs.push(collection[indexes[names[i]]]);
+        }
+        return objs;
+      };
+
       // Add an object to the remote collection. Adding an object is the
       // equivalent of calling `push()` on a Firebase reference.
       collection.add = function(item, cb) {
         var ref;
+        // Make sure to remove $$hashKey etc.
+        var newItem = angular.fromJson(angular.toJson(item));
         if (!cb) {
-          ref = collectionRef.ref().push(item);
+          ref = collectionRef.ref().push(newItem);
         } else {
-          ref = collectionRef.ref().push(item, cb);
+          ref = collectionRef.ref().push(newItem, cb);
         }
         return ref;
       };
@@ -334,17 +371,23 @@ angular.module("firebase").factory("angularFireCollection", ["$timeout",
         }
       };
 
-      // Update an object in the remote collection.
+      // Incrementally update an object in the remote collection.
       collection.update = function(itemOrId, cb) {
         var item = angular.isString(itemOrId) ?
           collection[indexes[itemOrId]] : itemOrId;
-        var copy = {};
-        // Update all properties, unless they're ones created by Angular.
-        angular.forEach(item, function(value, key) {
-          if (key.indexOf("$") !== 0) {
-            copy[key] = value;
-          }
-        });
+        var copy = angular.fromJson(angular.toJson(item));
+        if (!cb) {
+          item.$ref.update(copy);
+        } else {
+          item.$ref.update(copy, cb);
+        }
+      };
+
+      // Update an object in its entirety in the remote collection.
+      collection.set = function(itemOrId, cb) {
+        var item = angular.isString(itemOrId) ?
+          collection[indexes[itemOrId]] : itemOrId;
+        var copy = angular.fromJson(angular.toJson(item));
         if (!cb) {
           item.$ref.set(copy);
         } else {
@@ -354,15 +397,15 @@ angular.module("firebase").factory("angularFireCollection", ["$timeout",
 
       collection.order = firebaseOrder;
       return collection;
-    }
+    };
   }
 ]);
 
 // Defines the `angularFireAuth` service that provides authentication support
 // for AngularFire.
 angular.module("firebase").factory("angularFireAuth", [
-   "$rootScope", "$parse", "$timeout", "$location", "$route", "$q",
-   function($rootScope, $parse, $timeout, $location, $route, $q) {
+  "$rootScope", "$parse", "$timeout", "$location", "$route", "$q",
+  function($rootScope, $parse, $timeout, $location, $route, $q) {
 
     // Helper function to extract claims from a JWT. Does *not* verify the
     // validity of the token.
@@ -403,7 +446,7 @@ angular.module("firebase").factory("angularFireAuth", [
     }
 
     return {
-      // Initializes the authentication service. Takes a Firebase URL and
+      // Initializes the authentication service. Takes a Firebase reference and
       // an options object, that may contain the following properties:
       //
       // * `scope`: The scope to which user authentication status will be
@@ -418,20 +461,25 @@ angular.module("firebase").factory("angularFireAuth", [
       // `firebase-simple-login.js` file by default. If this value is set to
       // false, this requirement is waived, but only custom login functionality
       // will be enabled.
-      initialize: function(url, options) {
+      initialize: function(ref, options) {
         var self = this;
+
+        if (typeof ref == "string") {
+          throw new Error("Please provide a Firebase reference instead " +
+            "of a URL, eg: new Firebase(url)");
+        }
 
         options = options || {};
         this._scope = $rootScope;
         if (options.scope) {
           this._scope = options.scope;
         } else {
-          throw new Exception("Scope not provided to angularFireAuth!");
+          throw new Error("Scope not provided to angularFireAuth!");
         }
         if (options.name) {
           this._name = options.name;
         } else {
-          throw new Exception("Model name not provided to angularFireAuth!");
+          throw new Error("Model name not provided to angularFireAuth!");
         }
 
         this._cb = function(){};
@@ -454,7 +502,7 @@ angular.module("firebase").factory("angularFireAuth", [
         }
 
         // Initialize user authentication state to `null`.
-        this._ref = new Firebase(url);
+        this._ref = ref;
         if (options.simple === false) {
           updateExpression(this._scope, this._name, null, function() {});
           return;
@@ -472,7 +520,7 @@ angular.module("firebase").factory("angularFireAuth", [
           if (err) {
             $rootScope.$broadcast("angularFireAuth:error", err);
           } else if (user) {
-            self._loggedIn(user)
+            self._loggedIn(user);
           } else {
             self._loggedOut();
           }
@@ -512,7 +560,7 @@ angular.module("firebase").factory("angularFireAuth", [
               }
             });
           } catch(e) {
-            $rootScope.$broadcast("angularFireAuth:error", e)
+            $rootScope.$broadcast("angularFireAuth:error", e);
           }
         }
         return promise;
@@ -601,6 +649,6 @@ angular.module("firebase").factory("angularFireAuth", [
         }));
         return def.promise;
       }
-    }
+    };
   }
 ]);

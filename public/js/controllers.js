@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-angular.module('mblogApp.controllers', []).
+angular.module('mblogApp.controllers', ['mblogApp.services', 'firebase']).
   controller('AppCtrl', function ($scope, $http) {
 
     $http({
@@ -17,10 +17,15 @@ angular.module('mblogApp.controllers', []).
     });
 
   }).
-  controller('WelcomeCtrl', function($scope) {
+  controller('welcomeCtrl', function($scope) {
     //
   }).
-  controller('makePostCtrl', function($scope){
+  controller('registerCtrl', function($scope, angularFireAuth){
+    var ref = new Firebase('https://edward-g.firebaseio.com');
+    angularFireAuth.initialize(ref, {scope: $scope, name: "user"});
+
+  }).
+  controller('makePostCtrl', function($scope, posts){
     $scope.open = function(){
       $scope.openStatus = true;
     };
@@ -30,7 +35,9 @@ angular.module('mblogApp.controllers', []).
     };
 
     $scope.post = function(){
-
+      console.log($scope.user, $scope.text, Date.now());
+      posts.push($scope.user, $scope.text);
+      $scope.close();
     };
 
     $scope.opts = {
@@ -38,6 +45,6 @@ angular.module('mblogApp.controllers', []).
       dialogFade: true
     };
   }).
-  controller('showPostCtrl', function($scope){
-      
+  controller('showPostCtrl', function($scope, posts){
+    $scope.posts = posts.get();
   });

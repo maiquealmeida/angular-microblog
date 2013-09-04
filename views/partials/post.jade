@@ -7,10 +7,10 @@
 				h3 make post
 			.modal-body	
 				label(for="name") Your name
-				input(ng-model="post.user", name="name",required)
-				textarea(ng-model="post.text",required)
+				input(ng-model="user", name="name",required)
+				textarea(ng-model="text",required)
 			.modal-footer
-				a.button(ng-submit="post()") Post
+				a.button(ng-click="post()") Post
 				a.button(ng-click="close()") Cancel
 
 
