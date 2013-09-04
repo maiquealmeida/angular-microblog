@@ -6,15 +6,15 @@ form(ng-controller='registerCtrl')
 	fieldset
 		.input-row
 			label(for='username') Username
-			input(type='text', name='username', placeholder='Your username here', ng-model='username')
+			input(type='text', placeholder='Your username here', ng-model='username', required)
 	
 		.input-row
 			label(for='password') Password
-			input(type='password', name='password', placeholder='Your password here', ng-model='password')
+			input(type='password', placeholder='Your password here', ng-model='password', required)
 	
 		.input-row
 			label(for='password-again') Password again
-			input(type='password', name='password-again', placeholder='Your password again', ng-model='password_again') 
+			input(type='password', placeholder='Your password again', ng-model='password_again', required) 
 
 		.button-row
 			input(type='submit', value='submit', ng-click='register()')

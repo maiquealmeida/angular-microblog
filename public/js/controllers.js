@@ -36,6 +36,8 @@ angular.module('mblogApp.controllers', ['mblogApp.services', 'firebase']).
         $location.path('/register');
       }
 
+      
+
     };
   }).
   controller('makePostCtrl', function($scope, posts){
