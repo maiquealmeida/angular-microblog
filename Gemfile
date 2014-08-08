@@ -13,6 +13,8 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 
 gem 'haml-rails'
+gem 'angularjs-rails'
+gem 'rails_admin'
 
 group :development do
 	gem 'guard-livereload'
